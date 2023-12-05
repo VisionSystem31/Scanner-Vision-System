@@ -6,9 +6,10 @@ from ultralytics import YOLO
 from statistics import mode
 from pyzbar.pyzbar import decode
 import cv2 
+import time 
 
 def visualizar():
-    global inicio, model, cap, frame, button, camera_id
+    global inicio, model, cap, frame, button, camera_id, loading_id
     global fecha_exp, lot_number, part_number, lblVideo
     global Text_fecha_exp, Text_lot_number, Text_part_number
     global Stop_fecha_exp, Stop_lot_number, Stop_part_number
@@ -21,7 +22,6 @@ def visualizar():
         lblVideo = tk.Label(pantalla)
         lblVideo.configure(borderwidth=0)
         lblVideo.place(x = 320, y = 320)
-        
         camera_id = 0
         inicio = 0
         button = 13
@@ -34,7 +34,9 @@ def visualizar():
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
         Stop_fecha_exp = True
         Stop_lot_number = True
-        Stop_part_number = True
+        Stop_part_number = True 
+        pantalla.delete(background_loading_id)
+        pantalla.delete(Text_loading)
     else:
         pantalla.delete(frame)
     
@@ -137,6 +139,11 @@ def visualizar():
                 camera_id = 0
             pantalla.after(100, visualizar)
 
+def loading_system():
+    global Text_loading, background_loading_id
+    background_loading_id = pantalla.create_image(0, 0, anchor=tk.NW, image=background_loading)
+    Text_loading = pantalla.create_text(960, 520, text=f"Loading the system...", font=("Helvetica", 50, "bold"), fill="white")
+    pantalla.after(100, visualizar)
 
 def obtener_info():
     global Part_ingresado, Exp_ingresado, Lot_ingresado
@@ -161,7 +168,7 @@ def obtener_info():
     pantalla.delete(Titulo_fecha_exp)
     pantalla.delete(Titulo_lot_number)
     pantalla.delete(Titulo_part_number)
-    visualizar()
+    loading_system()
     # else:
     #     return
 
@@ -195,6 +202,7 @@ background_id = pantalla.create_image(221, 156, anchor=tk.NW, image=background)
 
 #Frame_fondo
 Frame_fondo = tk.PhotoImage(file="IMG/Frame_fondo.png")
+background_loading = tk.PhotoImage(file="IMG/background_loading.png")
 
 #Boton de Clear
 clear = tk.PhotoImage(file="IMG/clear.png")
