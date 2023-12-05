@@ -14,13 +14,13 @@ def visualizar():
     global Stop_fecha_exp, Stop_lot_number, Stop_part_number
 
     if inicio == 1:
-        Titulo_part_number  = pantalla.create_text(361, 279, text=f"Part: {Part_ingresado}", font=("Helvetica", 30, "bold"), fill="#EBFF03", anchor=tk.NW)
-        Titulo_fecha_exp = pantalla.create_text(780, 279, text=f"Exp: {Exp_ingresado}", font=("Helvetica", 30, "bold"), fill="#EBFF03", anchor=tk.NW)
-        Titulo_lot_number = pantalla.create_text(1197, 279, text=f"Lot: {Lot_ingresado}", font=("Helvetica", 30, "bold"), fill="#EBFF03", anchor=tk.NW)
-    
+        Titulo_part_number  = pantalla.create_text(320, 193, text=f"Part: {Part_ingresado}", font=("Helvetica", 30, "bold"), fill="#FFFFFF", anchor=tk.NW)
+        Titulo_fecha_exp = pantalla.create_text(779, 193, text=f"Exp: {Exp_ingresado}", font=("Helvetica", 30, "bold"), fill="#FFFFFF", anchor=tk.NW)
+        Titulo_lot_number = pantalla.create_text(1245, 193, text=f"Lot: {Lot_ingresado}", font=("Helvetica", 30, "bold"), fill="#FFFFFF", anchor=tk.NW)
+        Frame_fondo_id = pantalla.create_image(295, 295, anchor=tk.NW, image=Frame_fondo)
         lblVideo = tk.Label(pantalla)
         lblVideo.configure(borderwidth=0)
-        lblVideo.place(x = 370, y = 400)
+        lblVideo.place(x = 320, y = 320)
         
         camera_id = 0
         inicio = 0
@@ -87,35 +87,35 @@ def visualizar():
 
             if len(part_number) >= 2:
                 pantalla.delete(Text_part_number)
-                if str(mode(part_number)) == Part_ingresado: Text_part_number  = pantalla.create_text(1083, 481, text=f"Part: {mode(part_number)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
-                else: Text_part_number  = pantalla.create_text(1083, 481, text=f"Part: {mode(part_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
+                if str(mode(part_number)) == Part_ingresado: Text_part_number  = pantalla.create_text(1116, 345, text=f"Part: {mode(part_number)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
+                else: Text_part_number  = pantalla.create_text(1116, 345, text=f"Part: {mode(part_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
                 Stop_part_number = False
             else:
                 try: pantalla.delete(Text_part_number)
                 except: pass
-                Text_part_number  = pantalla.create_text(1083, 481, text=f"Part: --------", font=("Helvetica", 35, "bold"), fill="white", anchor=tk.NW)
+                Text_part_number  = pantalla.create_text(1116, 345, text=f"Part:__________", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
             
 
             if len(fecha_exp) >= 2:
                 pantalla.delete(Text_fecha_exp)
-                if str(mode(fecha_exp)) == Exp_ingresado: Text_fecha_exp = pantalla.create_text(1083, 616, text=f"Exp: {mode(fecha_exp)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
-                else: Text_fecha_exp = pantalla.create_text(1083, 616, text=f"Exp: {mode(fecha_exp)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
+                if str(mode(fecha_exp)) == Exp_ingresado: Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp: {mode(fecha_exp)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
+                else: Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp: {mode(fecha_exp)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
                 Stop_fecha_exp = False
             else:
                 try: pantalla.delete(Text_fecha_exp)
                 except: pass
-                Text_fecha_exp = pantalla.create_text(1083, 616, text=f"Exp: --------", font=("Helvetica", 35, "bold"), fill="white", anchor=tk.NW)
+                Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp:__________ ", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
 
            
             if len(lot_number) >= 2:
                 pantalla.delete(Text_lot_number)
-                if str(mode(lot_number)) == Lot_ingresado: Text_lot_number = pantalla.create_text(1083, 745, text=f"Lot: {mode(lot_number)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
-                else: Text_lot_number = pantalla.create_text(1083, 745, text=f"Lot: {mode(lot_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
+                if str(mode(lot_number)) == Lot_ingresado: Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot: {mode(lot_number)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
+                else: Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot: {mode(lot_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
                 Stop_lot_number = False
             else:
                 try: pantalla.delete(Text_lot_number)
                 except: pass
-                Text_lot_number = pantalla.create_text(1083, 745, text=f"Lot: -------", font=("Helvetica", 35, "bold"), fill="white", anchor=tk.NW)
+                Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot:__________ ", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
             
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = imutils.resize(frame, width=640, height=480)
@@ -129,8 +129,8 @@ def visualizar():
             pantalla.after(10, visualizar)
         else:
             cap = cv2.VideoCapture(camera_id)
-            cap.set(cv2.CAP_PROP_FRAME_WIDTH,1280)
-            cap.set(cv2.CAP_PROP_FRAME_HEIGHT,720)
+            cap.set(cv2.CAP_PROP_FRAME_WIDTH,640)
+            cap.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
             print("La camara id es: ",camera_id)
             camera_id +=1
             if camera_id >= 10:
@@ -174,7 +174,7 @@ def turn_off_action():
     root.destroy()
 
 root = tk.Tk()
-root.title("DAS Label Verification (prototype)")
+root.title("Label Verification Prototype")
 
 root.attributes('-fullscreen', True)
 # root.geometry("1920x1080")
@@ -182,7 +182,7 @@ root.attributes('-fullscreen', True)
 pantalla = tk.Canvas(root, width=1920, height=1080, bg="#0E131F", highlightthickness=0)
 pantalla.pack()
 
-Titulo = pantalla.create_text(960, 100, text="DAS Label Verification (prototype)", font=("Helvetica", 50, "bold"), fill="white")
+Titulo = pantalla.create_text(210, 52, text="Label Verification Prototype", font=("Helvetica", 40, "bold"), fill="white", anchor=tk.NW)
 
 #Boton de cerrado
 Close = tk.PhotoImage(file="IMG/x-circle.png")
@@ -191,35 +191,39 @@ Close_Button.place(x = 1794, y = 55)
 
 #Fondo
 background = tk.PhotoImage(file="IMG/background.png")
-background_id = pantalla.create_image(210, 216, anchor=tk.NW, image=background)
+background_id = pantalla.create_image(221, 156, anchor=tk.NW, image=background)
+
+#Frame_fondo
+Frame_fondo = tk.PhotoImage(file="IMG/Frame_fondo.png")
 
 #Boton de Clear
 clear = tk.PhotoImage(file="IMG/clear.png")
 clear_id = tk.Button(pantalla, image=clear, bg="#0B3954", command=clear_fields, borderwidth=0, relief="flat", highlightthickness=0)
-clear_id.place(x = 323, y = 847)
+clear_id.place(x = 640, y = 787)
 
 #Boton de Next
 Next = tk.PhotoImage(file="IMG/next.png")
 Next_id = tk.Button(pantalla, image=Next, bg="#0B3954", command=obtener_info, borderwidth=0, relief="flat", highlightthickness=0)
-Next_id.place(x = 1295, y = 847)
+Next_id.place(x = 1100, y = 787)
 
 # Campo de texto para ingresar Número de Parte 
 Part = tk.Entry(pantalla, bg="white", font=("Helvetica", 30), borderwidth=0, relief="flat", highlightthickness=0)
 Part.config(width=25) 
-Part.place(x=977, y=325)
+Part.place(x=950, y=295)
 
 # Campo de texto para ingresar Fecha de Expiración
 Exp = tk.Entry(pantalla, bg="white", font=("Helvetica", 30), borderwidth=0, relief="flat", highlightthickness=0)
 Exp.config(width=25) 
-Exp.place(x=977, y=501)
+Exp.place(x=950, y=450)
 
 # Campo de texto para ingresar Fecha de Expiración
 Lot = tk.Entry(pantalla, bg="white", font=("Helvetica", 30), borderwidth=0, relief="flat", highlightthickness=0)
 Lot.config(width=25) 
-Lot.place(x=977, y=684)
+Lot.place(x=950, y=604)
 inicio = 1
-Titulo_fecha_exp = pantalla.create_text(323, 320, text=f"Número de Parte: ", font=("Helvetica", 40, "bold"), fill="white", anchor=tk.NW)
-Titulo_lot_number = pantalla.create_text(323, 502, text=f"Fecha de Expiración: ", font=("Helvetica", 40, "bold"), fill="white", anchor=tk.NW)
-Titulo_part_number  = pantalla.create_text(323, 685, text=f"Número de Lote: ", font=("Helvetica", 40, "bold"), fill="white", anchor=tk.NW)
+
+Titulo_fecha_exp = pantalla.create_text(393, 295, text=f"Número de Parte: ", font=("Helvetica", 35, "bold"), fill="white", anchor=tk.NW)
+Titulo_lot_number = pantalla.create_text(393, 450, text=f"Fecha de Expiración: ", font=("Helvetica", 35, "bold"), fill="white", anchor=tk.NW)
+Titulo_part_number  = pantalla.create_text(393, 605, text=f"Número de Lote: ", font=("Helvetica", 35, "bold"), fill="white", anchor=tk.NW)
 
 root.mainloop()
