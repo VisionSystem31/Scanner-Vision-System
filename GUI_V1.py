@@ -13,6 +13,7 @@ def visualizar():
     global fecha_exp, lot_number, part_number, lblVideo
     global Text_fecha_exp, Text_lot_number, Text_part_number
     global Stop_fecha_exp, Stop_lot_number, Stop_part_number
+    global cant_pouches, box, Titulo_fecha_exp, Titulo_lot_number, Titulo_part_number, title_change
 
     if inicio == 1:
         Titulo_part_number  = pantalla.create_text(320, 193, text=f"Part: {Part_ingresado}", font=("Helvetica", 30, "bold"), fill="#FFFFFF", anchor=tk.NW)
@@ -37,6 +38,9 @@ def visualizar():
         Stop_part_number = True 
         pantalla.delete(background_loading_id)
         pantalla.delete(Text_loading)
+        cant_pouches = 0
+        box = False
+        title_change = True
     else:
         pantalla.delete(frame)
     
@@ -86,39 +90,88 @@ def visualizar():
                         Stop_fecha_exp = True
                         Stop_lot_number = True
                         Stop_part_number = True
+            if cant_pouches <= 5:
+                title_change = True
+                if len(part_number) >= 4:
+                    pantalla.delete(Text_part_number)
+                    if str(mode(part_number)) == Part_ingresado: Text_part_number  = pantalla.create_text(1116, 345, text=f"Part: {mode(part_number)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
+                    else: Text_part_number  = pantalla.create_text(1116, 345, text=f"Part: {mode(part_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
+                    Stop_part_number = False
+                else:
+                    try: pantalla.delete(Text_part_number)
+                    except: pass
+                    Text_part_number  = pantalla.create_text(1116, 345, text=f"Part:__________", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
 
-            if len(part_number) >= 2:
-                pantalla.delete(Text_part_number)
-                if str(mode(part_number)) == Part_ingresado: Text_part_number  = pantalla.create_text(1116, 345, text=f"Part: {mode(part_number)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
-                else: Text_part_number  = pantalla.create_text(1116, 345, text=f"Part: {mode(part_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
-                Stop_part_number = False
-            else:
-                try: pantalla.delete(Text_part_number)
-                except: pass
-                Text_part_number  = pantalla.create_text(1116, 345, text=f"Part:__________", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
-            
+                if len(fecha_exp) >= 4:
+                    pantalla.delete(Text_fecha_exp)
+                    if str(mode(fecha_exp)) == Exp_ingresado: Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp: {mode(fecha_exp)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
+                    else: Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp: {mode(fecha_exp)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
+                    Stop_fecha_exp = False
+                else:
+                    try: pantalla.delete(Text_fecha_exp)
+                    except: pass
+                    Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp:__________ ", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
 
-            if len(fecha_exp) >= 2:
-                pantalla.delete(Text_fecha_exp)
-                if str(mode(fecha_exp)) == Exp_ingresado: Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp: {mode(fecha_exp)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
-                else: Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp: {mode(fecha_exp)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
-                Stop_fecha_exp = False
+                if len(lot_number) >= 4:
+                    cant_pouches += 1
+                    pantalla.delete(Text_lot_number)
+                    if str(mode(lot_number)) == Lot_ingresado: Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot: {mode(lot_number)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
+                    else: Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot: {mode(lot_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
+                    Stop_lot_number = False
+                else:
+                    try: pantalla.delete(Text_lot_number)
+                    except: pass
+                    Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot:__________ ", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
             else:
-                try: pantalla.delete(Text_fecha_exp)
-                except: pass
-                Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp:__________ ", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
+                if title_change == True:
+                    pantalla.delete(Titulo_part_number)
+                    pantalla.delete(Titulo_fecha_exp)
+                    pantalla.delete(Titulo_lot_number)
+                    Titulo_part_number  = pantalla.create_text(320, 193, text=f"Part: 470015", font=("Helvetica", 30, "bold"), fill="#FFFFFF", anchor=tk.NW)
+                    Titulo_fecha_exp = pantalla.create_text(779, 193, text=f"Exp: 20251130", font=("Helvetica", 30, "bold"), fill="#FFFFFF", anchor=tk.NW)
+                    Titulo_lot_number = pantalla.create_text(1245, 193, text=f"Lot: DM01234614", font=("Helvetica", 30, "bold"), fill="#FFFFFF", anchor=tk.NW)
+                    title_change = False
 
-           
-            if len(lot_number) >= 2:
-                pantalla.delete(Text_lot_number)
-                if str(mode(lot_number)) == Lot_ingresado: Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot: {mode(lot_number)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
-                else: Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot: {mode(lot_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
-                Stop_lot_number = False
-            else:
-                try: pantalla.delete(Text_lot_number)
-                except: pass
-                Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot:__________ ", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
-            
+                if len(part_number) >= 4:
+                    pantalla.delete(Text_part_number)
+                    if str(mode(part_number)) == "470015": Text_part_number  = pantalla.create_text(1116, 345, text=f"Part: {mode(part_number)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
+                    else: Text_part_number  = pantalla.create_text(1116, 345, text=f"Part: {mode(part_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
+                    Stop_part_number = False
+                else:
+                    try: pantalla.delete(Text_part_number)
+                    except: pass
+                    Text_part_number  = pantalla.create_text(1116, 345, text=f"Part:__________", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
+
+                if len(fecha_exp) >= 4:
+                    pantalla.delete(Text_fecha_exp)
+                    if str(mode(fecha_exp)) == "20251130": Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp: {mode(fecha_exp)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
+                    else: Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp: {mode(fecha_exp)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
+                    Stop_fecha_exp = False
+                else:
+                    try: pantalla.delete(Text_fecha_exp)
+                    except: pass
+                    Text_fecha_exp = pantalla.create_text(1116, 521, text=f"Exp:__________ ", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
+
+                if len(lot_number) >= 4:
+                    box = True
+                    pantalla.delete(Text_lot_number)
+                    if str(mode(lot_number)) == "DM01234614": Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot: {mode(lot_number)}", font=("Helvetica", 35, "bold"), fill="green", anchor=tk.NW)
+                    else: Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot: {mode(lot_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
+                    Stop_lot_number = False
+                else:
+                    try: pantalla.delete(Text_lot_number)
+                    except: pass
+                    Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot:__________ ", font=("Helvetica", 30, "bold"), fill="white", anchor=tk.NW)
+                    if box == True:
+                        box = False
+                        cant_pouches = 0
+                        pantalla.delete(Titulo_part_number)
+                        pantalla.delete(Titulo_fecha_exp)
+                        pantalla.delete(Titulo_lot_number)
+                        Titulo_part_number  = pantalla.create_text(320, 193, text=f"Part: {Part_ingresado}", font=("Helvetica", 30, "bold"), fill="#FFFFFF", anchor=tk.NW)
+                        Titulo_fecha_exp = pantalla.create_text(779, 193, text=f"Exp: {Exp_ingresado}", font=("Helvetica", 30, "bold"), fill="#FFFFFF", anchor=tk.NW)
+                        Titulo_lot_number = pantalla.create_text(1245, 193, text=f"Lot: {Lot_ingresado}", font=("Helvetica", 30, "bold"), fill="#FFFFFF", anchor=tk.NW)
+
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = imutils.resize(frame, width=640, height=480)
 
