@@ -208,35 +208,20 @@ def loading_system():
 
 def obtener_info():
     global Part_ingresado, Exp_ingresado, Lot_ingresado
-    Part_ingresado = Part.get()
-    Exp_ingresado = Exp.get()
-    Lot_ingresado = Lot.get()
-    if Part_ingresado == "" or Exp_ingresado == "" or Lot_ingresado == "":
-        messagebox.showerror("Error", "Por favor, llenar todos los campos")
-        return
-    
-    print("Número de Parte: ", Part_ingresado)
-    print("Fecha de Expiración: ", Part_ingresado)
-    print("Número de Lote: ", Part_ingresado)
 
-    # confirmar = messagebox.askquestion("Confirmación", "¿Está seguro de que todos los campos están llenados correctamente?", icon='info')
-    # if confirmar == 'yes':
-    clear_id.destroy()
-    Next_id.destroy()
-    Part.destroy()
-    Exp.destroy()
-    Lot.destroy()
+    fileurl = '/home/jetson/Documents/temp/label_data.txt'
+    variabledata = ReadData(fileurl)
+
+    Part_ingresado = variabledata.get('PartNumber', '')
+    Exp_ingresado = variabledata.get('ExpDate', '')
+    Lot_ingresado = variabledata.get('LotNumber', '')
+    
     pantalla.delete(Titulo_fecha_exp)
     pantalla.delete(Titulo_lot_number)
     pantalla.delete(Titulo_part_number)
     loading_system()
     # else:
     #     return
-
-def clear_fields():
-    Part.delete(0, tk.END)
-    Exp.delete(0, tk.END)
-    Lot.delete(0, tk.END)
 
 def turn_off_action():
     root.destroy()
@@ -265,34 +250,5 @@ background_id = pantalla.create_image(221, 156, anchor=tk.NW, image=background)
 Frame_fondo = tk.PhotoImage(file="IMG/Frame_fondo.png")
 background_loading = tk.PhotoImage(file="IMG/background_loading.png")
 
-#Boton de Clear
-clear = tk.PhotoImage(file="IMG/clear.png")
-clear_id = tk.Button(pantalla, image=clear, bg="#0B3954", command=clear_fields, borderwidth=0, relief="flat", highlightthickness=0)
-clear_id.place(x = 640, y = 787)
-
-#Boton de Next
-Next = tk.PhotoImage(file="IMG/next.png")
-Next_id = tk.Button(pantalla, image=Next, bg="#0B3954", command=obtener_info, borderwidth=0, relief="flat", highlightthickness=0)
-Next_id.place(x = 1100, y = 787)
-
-# Campo de texto para ingresar Número de Parte 
-Part = tk.Entry(pantalla, bg="white", font=("Helvetica", 30), borderwidth=0, relief="flat", highlightthickness=0)
-Part.config(width=25) 
-Part.place(x=950, y=295)
-
-# Campo de texto para ingresar Fecha de Expiración
-Exp = tk.Entry(pantalla, bg="white", font=("Helvetica", 30), borderwidth=0, relief="flat", highlightthickness=0)
-Exp.config(width=25) 
-Exp.place(x=950, y=450)
-
-# Campo de texto para ingresar Fecha de Expiración
-Lot = tk.Entry(pantalla, bg="white", font=("Helvetica", 30), borderwidth=0, relief="flat", highlightthickness=0)
-Lot.config(width=25) 
-Lot.place(x=950, y=604)
-inicio = 1
-
-Titulo_fecha_exp = pantalla.create_text(393, 295, text=f"Número de Parte: ", font=("Helvetica", 35, "bold"), fill="white", anchor=tk.NW)
-Titulo_lot_number = pantalla.create_text(393, 450, text=f"Fecha de Expiración: ", font=("Helvetica", 35, "bold"), fill="white", anchor=tk.NW)
-Titulo_part_number  = pantalla.create_text(393, 605, text=f"Número de Lote: ", font=("Helvetica", 35, "bold"), fill="white", anchor=tk.NW)
 
 root.mainloop()
