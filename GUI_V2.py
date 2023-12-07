@@ -209,9 +209,15 @@ def loading_system():
 
 def obtener_info():
     global Part_ingresado, Exp_ingresado, Lot_ingresado
-    Part_ingresado = Part.get()
-    Exp_ingresado = Exp.get()
-    Lot_ingresado = Lot.get()
+    # Part_ingresado = Part.get()
+    # Exp_ingresado = Exp.get()
+    # Lot_ingresado = Lot.get()
+    fileurl = '/home/jetson/Documents/temp/label_data.txt'
+    variabledata = ReadData(fileurl)
+
+    Part_ingresado = variabledata.get('PartNumber', '')
+    Exp_ingresado = variabledata.get('ExpDate', '')
+    Lot_ingresado = variabledata.get('LotNumber', '')
     if Part_ingresado == "" or Exp_ingresado == "" or Lot_ingresado == "":
         messagebox.showerror("Error", "Por favor, llenar todos los campos")
         return
@@ -273,7 +279,7 @@ clear_id.place(x = 640, y = 787)
 
 #Boton de Next
 Next = tk.PhotoImage(file="IMG/next.png")
-Next_id = tk.Button(pantalla, image=Next, bg="#0B3954", command=obtener_info, borderwidth=0, relief="flat", highlightthickness=0)
+Next_id = tk.Button(pantalla, image=Next, bg="#0B3954", command=loading_system, borderwidth=0, relief="flat", highlightthickness=0)
 Next_id.place(x = 1100, y = 787)
 
 # Campo de texto para ingresar Número de Parte 
