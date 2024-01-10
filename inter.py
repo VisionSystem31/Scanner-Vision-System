@@ -1,5 +1,5 @@
 import tkinter as tk
-from escaner3 import *
+from escaner_QR import *
 
 
 def verificar_datos():
