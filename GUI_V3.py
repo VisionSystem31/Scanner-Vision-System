@@ -121,6 +121,7 @@ def visualizar():
                             cant_pouches += 1
                             flag = False
                             print(cant_pouches)
+                        -
                     else: 
                         Text_lot_number = pantalla.create_text(1116, 697, text=f"Lot: {mode(lot_number)}*", font=("Helvetica", 35, "bold"), fill="red", anchor=tk.NW)
                     Stop_lot_number = False
